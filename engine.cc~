@@ -1,0 +1,26 @@
+
+#include "engine.h"
+
+
+
+const int Engine::checkState(const Board * board, int currentPlayer){
+  int width = board->getWidth();
+  int height = board->getHeight();
+
+
+  //check horizontal
+  for(int i=0;i<width-4;i++){
+    for(int j=0; j<height;j++){
+      if((board[width][height]==board[width+1][height])&&
+	 (board[width+1][height]==board[width+2][height])&&
+	 (board[width+2][height]==board[width+3][height])){
+	if(board[width][height]!=0){
+	  return 1;
+	}
+      }
+    }
+  }  
+  return 0;
+  
+
+}
