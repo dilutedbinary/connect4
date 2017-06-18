@@ -5,7 +5,7 @@ connect4: $(OBJS)
 	g++ -o connect4 $(OBJS) -lncurses
 
 game.o: game.cc board.h engine.h
-	g++   -Wall -Werror game.cc -c
+	g++    game.cc -c
 
 board.o: board.cc board.h
 	g++  -Wall -Werror board.cc -c
