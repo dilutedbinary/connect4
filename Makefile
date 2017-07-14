@@ -1,18 +1,62 @@
+#
+# Templated makefile
+#
 
-OBJS = game.o board.o engine.o
+CC := g++ # This is the main compiler
 
-connect4: $(OBJS)
-	g++ -o connect4 $(OBJS) -lncurses
+# CC := clang --analyze # and comment out the linker last line for sanity
 
-game.o: game.cc board.h engine.h
-	g++    game.cc -c
+SRCDIR := src
+BUILDDIR := build
+TARGET := bin/runner
 
-board.o: board.cc board.h
-	g++  -Wall -Werror board.cc -c
+SRCEXT := cc
+SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
+CFLAGS := -g # -Wall
+LIB := -lncurses
+INC := -I include
 
-engine.o: engine.cc engine.h board.h
-	g++ -Wall -Werror engine.cc -c
 
+
+
+$(TARGET): $(OBJECTS)
+	@echo " Linking..."
+	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
+	@mkdir -p $(BUILDDIR)
+	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
 clean:
-	rm -f *~ *.o connect4
+	@echo " Cleaning..."; 
+	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+
+# Tests
+tester:
+	$(CC) $(CFLAGS) test/tester.cpp $(INC) $(LIB) -o bin/tester
+
+# Spikes
+ticket:
+	$(CC) $(CFLAGS) spikes/ticket.cpp $(INC) $(LIB) -o bin/ticket
+
+.PHONY: clean
+
+
+
+
+# connect4: $(OBJS)
+# 	g++ -o connect4 $(OBJS) -lncurses
+
+# game.o: game.cc board.h engine.h
+# 	g++    game.cc -c
+
+# board.o: board.cc board.h
+# 	g++  -Wall -Werror board.cc -c
+
+# engine.o: engine.cc engine.h board.h
+# 	g++ -Wall -Werror engine.cc -c
+
+
+# clean:
+# 	rm -f *~ *.o connect4
