@@ -55,28 +55,28 @@ int main() {
         c = getch();
         refresh();
         switch (c) {
-        case 260:
+            case 260:
             mvprintw(1, 1, "pressed Left");
             if (currRow == 0) {
                 break;
             }
             moveLeft();
             break;
-        case 261:
+            case 261:
             if (currRow == BOARDWIDTH - 1) {
                 break;
             }
             mvprintw(1, 1, "pressed right");
             moveRight();
             ;
-        case 258:
+            case 258:
 
             mvprintw(0, 1, "Dropped");
 
             board->drop(currRow, currentPlayer);
             currentPlayer = 3 - currentPlayer;
             break;
-        default:
+            default:
             mvprintw(0, 1, "Invalid Key Entry");
 
 
