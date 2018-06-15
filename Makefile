@@ -2,7 +2,7 @@
 # Templated makefile
 #
 
-CC := g++ # This is the main compiler
+CC := gcc # This is the main compiler
 
 # CC := clang --analyze # and comment out the linker last line for sanity
 
@@ -15,7 +15,8 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := -g # -Wall
 LIB := -lncurses
-INC := -I include
+INC := -Iinclude -I/lib/x86_64-linux-gnu
+
 
 
 
