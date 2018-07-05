@@ -1,6 +1,6 @@
+
 #include <iostream>
-#include <ncurses.h>
-#include "engine.h"
+#include "Connect4Game.h"
 
 using namespace std;
 
@@ -8,13 +8,17 @@ using namespace std;
 const int YLOCATION = 12;
 const int XLOCATION = 5;
 const int BOARDWIDTH = 10;
+
 void destroy_win(WINDOW *local_win);
+
 WINDOW *create_newwin(int height, int width, int starty, int startx);
-void printDropper(int, Board *, int);
+
+void printDropper(int, C4BoardStateInterface *, int);
 
 int main() {
     WINDOW *my_win;
     int startx, starty, width, height;
+    cout << "teste";
     initscr();/* Start curses mode */
     cbreak();/* Line buffering disabled, Pass on
                 * everty thing to me */
@@ -35,7 +39,7 @@ int main() {
 
     int currentPlayer = 1;
     int currRow = 5;
-    Board* board = new Board(7, BOARDWIDTH, XLOCATION, YLOCATION);
+    C4BoardStateInterface *board = new C4BoardStateInterface(7, BOARDWIDTH, XLOCATION, YLOCATION);
     initscr();
     clear();
     noecho();
@@ -56,28 +60,27 @@ int main() {
         refresh();
         switch (c) {
             case 260:
-            mvprintw(1, 1, "pressed Left");
-            if (currRow == 0) {
+                mvprintw(1, 1, "pressed Left");
+                if (currRow == 0) {
+                    break;
+                }
+                moveLeft();
                 break;
-            }
-            moveLeft();
-            break;
             case 261:
-            if (currRow == BOARDWIDTH - 1) {
-                break;
-            }
-            mvprintw(1, 1, "pressed right");
-            moveRight();
-            ;
+                if (currRow == BOARDWIDTH - 1) {
+                    break;
+                }
+                mvprintw(1, 1, "pressed right");
+                moveRight();;
             case 258:
 
-            mvprintw(0, 1, "Dropped");
+                mvprintw(0, 1, "Dropped");
 
-            board->drop(currRow, currentPlayer);
-            currentPlayer = 3 - currentPlayer;
-            break;
+                board->drop(currRow, currentPlayer);
+                currentPlayer = 3 - currentPlayer;
+                break;
             default:
-            mvprintw(0, 1, "Invalid Key Entry");
+                mvprintw(0, 1, "Invalid Key Entry");
 
 
         }
@@ -93,8 +96,6 @@ int main() {
     endwin();
     return 0;
 }
-
-
 
 
 void clearDropperRow() {
@@ -128,15 +129,14 @@ void printDropper(int row, int currentPlayer) {
     mvprintw(YLOCATION - 2, visualRow + 6, "//");
 
 
-
 }
 
 
-WINDOW *create_newwin(int height, int width, int starty, int startx)
-{   WINDOW *local_win;
+WINDOW *create_newwin(int height, int width, int starty, int startx) {
+    WINDOW *local_win;
 
     local_win = newwin(height, width, starty, startx);
-    box(local_win, 0 , 0);/* 0, 0 gives default characters
+    box(local_win, 0, 0);/* 0, 0 gives default characters
                                 * for the vertical and horizontal
                                 * lines*/
     wrefresh(local_win);/* Show that box */
@@ -145,8 +145,7 @@ WINDOW *create_newwin(int height, int width, int starty, int startx)
 }
 
 
-void destroy_win(WINDOW *local_win)
-{
+void destroy_win(WINDOW *local_win) {
     /* box(local_win, ' ', ' '); : This won't produce the desired
         * result of erasing the window. It will leave it's four corners
         * and so an ugly remnant of window.
