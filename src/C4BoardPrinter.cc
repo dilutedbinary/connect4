@@ -1,8 +1,8 @@
-#include <C4BoardInterface.h>
+#include <Game.h>
 
 class AbstractBoardPrinter {
 public:
-    virtual void print(C4BoardStateInterface board);
+    virtual void print(C4Board board);
 };
 
 

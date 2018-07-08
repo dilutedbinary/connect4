@@ -1,11 +1,11 @@
 
 
 
-#include "C4BoardInterface.h"
+#include "Game.h"
 
 class Game {
 private:
-    C4BoardStateInterface board;
+    C4Board board;
     Player player1, player2;
 
 };

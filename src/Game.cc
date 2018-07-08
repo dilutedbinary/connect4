@@ -1,23 +1,18 @@
 #include <C4BoardState.h>
-#include <C4BoardInterface.h>
+#include <Game.h>
 
 using namespace std;
 
 
 //Inititialize an interface
-C4BoardState *C4BoardStateInterface::create_board(int columns, int rows) {
-    if (rows <= 0 || columns <= 0) {
-        cout << "Invalid Dimensions" << endl;
-        exit(-1);
-    }
-    C4BoardState *board = new C4BoardState(columns, rows);
-    return board;
+Game::Game(int columns, int rows) : currentState(columns, rows) {
 
 }
 
-void C4BoardStateInterface::clear(C4BoardState *board) {
-    board->zeroize();
+void Game::clear() {
+    currentState.zeroize();
 }
+
 
 /**
  * Drop: place a toke in the given column (if a valid move)
@@ -26,16 +21,16 @@ void C4BoardStateInterface::clear(C4BoardState *board) {
  * Return -1: column full
  * Return -2: invalid column
  */
-int C4BoardStateInterface::drop(C4BoardState *board, int column, int token) {
-    int width = getWidth(board);
-    int height = getHeight(board);
+int Game::drop(int column, int token) {
+    int width = getWidth();
+    int height = getHeight();
     if (!(column < width)) {
 
         return -2;
     }
 
     int currentHeight = 0;
-    //iterate through the selected column untill an open pace appears
+    //iterate through the selected column until an open pace appears
     while (!(grid[xCoord][currentHeight] == 0)) {
         currentHeight++;
         if (currentHeight >= height_) {
@@ -67,48 +62,15 @@ void Board::print(){
   }
 
 */
-void C4BoardStateInterface::horizontal(int yLoc) {
-    int visualWidth = width_;
 
-
-    mvprintw(yLoc, xLocation_, string(visualWidth * 6 + 1, '-').c_str());
+vector<int> Game::getAvailableMoves() {
+    return vector<int>();
 }
 
-void C4BoardStateInterface::vertical(int xLoc) {
-    int visualHeight = height_;
-    for (int i = 0; i < visualHeight * 3 + 1; i++) {
-        if (i % 3 == 0) {
-            mvprintw(i + yLocation_, xLoc, "+");
-        } else {
-            mvprintw(i + yLocation_, xLoc, "|");
-        }
-    }
-}
-
-void C4BoardStateInterface::printJumbo() {
-
-    int xOffset = xLocation_;
-    int yOffset = yLocation_;
-    //just saving because it gets overwritten
-    //  int originalx = xOffset;
-
-    for (int i = 0; i < height_ + 1; i++) {
-        horizontal(i * 3 + yOffset);
-    }
-
-    for (int i = 0; i < width_ + 1; i++) {
-        vertical(i * 6 + xOffset);
-    }
-    for (int i = height_ - 1; i >= 0; i--) {
-
-        for (int j = 0; j < width_; j++) {
-            place(j, i, grid[j][i]);
-        }
-    }
-}
+/*
 
 
-void C4BoardStateInterface::place(int colNum, int rowNum, int token) {
+void Game::place(int colNum, int rowNum, int token) {
     rowNum = height_ - rowNum - 1;
     string line1 = getToken(token, 1);
     string line2 = getToken(token, 2);
@@ -124,7 +86,8 @@ void C4BoardStateInterface::place(int colNum, int rowNum, int token) {
 }
 
 
-const char *C4BoardStateInterface::getToken(int key, int lineNum) {
+
+const char *Game::getToken(int key, int lineNum) {
     switch (key) {
         case 0:
             return "   ";
@@ -142,12 +105,10 @@ const char *C4BoardStateInterface::getToken(int key, int lineNum) {
 }
 
 //[x][y]
-const int *C4BoardStateInterface::operator[](int i) const {
+const int *Game::operator[](int i) const {
 
     return grid[i];
 }
 
 
-void C4BoardStateInterface::initialize_board() {
-
-}
+*/

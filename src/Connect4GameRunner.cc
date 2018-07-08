@@ -13,7 +13,7 @@ void destroy_win(WINDOW *local_win);
 
 WINDOW *create_newwin(int height, int width, int starty, int startx);
 
-void printDropper(int, C4BoardStateInterface *, int);
+void printDropper(int, C4Board *, int);
 
 int main() {
     WINDOW *my_win;
@@ -39,7 +39,7 @@ int main() {
 
     int currentPlayer = 1;
     int currRow = 5;
-    C4BoardStateInterface *board = new C4BoardStateInterface(7, BOARDWIDTH, XLOCATION, YLOCATION);
+    C4Board *board = new C4Board(7, BOARDWIDTH, XLOCATION, YLOCATION);
     initscr();
     clear();
     noecho();

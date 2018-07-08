@@ -2,8 +2,8 @@
 #include "Connect4Engine.h"
 
 const int Engine::checkState(const C4BoardState *board, int currentPlayer) {
-    int width = C4BoardStateInterface::getWidth(board);
-    int height = C4BoardStateInterface::getHeight(board);
+    int width = C4Board::getWidth(board);
+    int height = C4Board::getHeight(board);
 
 
     //check horizontal
