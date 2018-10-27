@@ -35,7 +35,7 @@ int C4BoardStateInterface::drop(C4BoardState *board, int column, int token) {
     }
 
     int currentHeight = 0;
-    //iterate through the selected column untill an open pace appears
+    //iterate through the selected column untill an open space appears
     while (!(grid[xCoord][currentHeight] == 0)) {
         currentHeight++;
         if (currentHeight >= height_) {
@@ -147,6 +147,9 @@ const int *C4BoardStateInterface::operator[](int i) const {
     return grid[i];
 }
 
+int getAvailableMoves(){
+  
+}
 
 void C4BoardStateInterface::initialize_board() {
 
